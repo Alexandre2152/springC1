@@ -5,7 +5,21 @@ import java.math.BigDecimal;
 public class Produto {
     private Integer id;
     private String descricao;
-    private BigDecimal preco;
+    private Double preco_unitario;
+
+    public Produto() {
+    }
+
+    public Produto(String descricao, Double preco_unitario) {
+        this.descricao = descricao;
+        this.preco_unitario = preco_unitario;
+    }
+
+    public Produto(Integer id, String descricao, Double preco_unitario) {
+        this.id = id;
+        this.descricao = descricao;
+        this.preco_unitario = preco_unitario;
+    }
 
     public Integer getId() {
         return id;
@@ -23,11 +37,20 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public BigDecimal getPreco() {
-        return preco;
+    public Double getPreco_unitario() {
+        return preco_unitario;
     }
 
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
+    public void setPreco_unitario(Double preco_unitario) {
+        this.preco_unitario = preco_unitario;
+    }
+
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", preco_unitario=" + preco_unitario +
+                '}';
     }
 }
