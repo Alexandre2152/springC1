@@ -57,17 +57,17 @@ public class VendasApplication {
         };
     }
 
-    @Bean
-    public CommandLineRunner ini(@Autowired Produtos produtos){
-        return args -> {
-
-            System.out.println("\n Salvando Produto");
-            produtos.salvar(new Produto("descricão um", 100.00));
-
-            List<Produto> todosProdutos = produtos.obterTodos();
-            todosProdutos.forEach(System.out::println);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner ini(@Autowired Produtos produtos){
+//        return args -> {
+//
+//            System.out.println("\n Salvando Produto");
+//            produtos.salvar(new Produto("descricão um", 100.00));
+//
+//            List<Produto> todosProdutos = produtos.obterTodos();
+//            todosProdutos.forEach(System.out::println);
+//        };
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(VendasApplication.class, args);
