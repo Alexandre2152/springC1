@@ -1,9 +1,7 @@
 package br.com.alexandre;
 
 import br.com.alexandre.domain.entity.Cliente;
-import br.com.alexandre.domain.entity.Produto;
 import br.com.alexandre.domain.repository.Clientes;
-import br.com.alexandre.domain.repository.Produtos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,52 +20,58 @@ public class VendasApplication {
         return args -> {
 
             System.out.println("Salvando Cliente");
-            clientes.salvar(new Cliente("Alexandre"));
-            clientes.salvar(new Cliente("Santana"));
-            clientes.salvar(new Cliente("Alexandre Santana"));
-            clientes.salvar(new Cliente("Fontes Santana"));
-            clientes.salvar(new Cliente("Fontes"));
+            clientes.save(new Cliente("Alexandre"));
+            clientes.save(new Cliente("Santana"));
+            clientes.save(new Cliente("Alexandre Santana"));
+            clientes.save(new Cliente("Fontes Santana"));
+            clientes.save(new Cliente("Fontes"));
 
-            List<Cliente> todosClientes = clientes.obterTodos();
+            List<Cliente> todosClientes = clientes.findAll();
             todosClientes.forEach(System.out::println);
 
             System.out.println("\nAtualizando Individualmente");
 
-            clientes.atualizar(new Cliente(5, "Jaspion"));
+            clientes.save(new Cliente(5, "Jaspion"));
 
-            clientes.obterTodos().forEach(System.out::println);
+            clientes.findAll().forEach(System.out::println);
 
             System.out.println("\nAtualizando");
             todosClientes.forEach(c->{
                 c.setNome(c.getNome() + " atualizado.");
-                clientes.atualizar(c);
+                clientes.save(c);
             });
 
-            clientes.obterTodos().forEach(System.out::println);
+            clientes.findAll().forEach(System.out::println);
 
-            System.out.println("\nBuscando Cliente");
-            clientes.buscarPorNome("x").forEach(System.out::println);
+            System.out.println("\nBuscando Cliente por nome");
+            clientes.findByNomeLike("%Fontes%").forEach(System.out::println);
+
+            System.out.println("\nBuscando Cliente por nome / Outro metodo");
+            clientes.buscarNome("%Ale%").forEach(System.out::println);
+
+            System.out.println("\nBuscar nome por id");
+            clientes.buscarPorId(3).forEach(System.out::println);
+
+            System.out.println("\nVerificar se existe o nome");
+            boolean existe = clientes.existsByNome("Fontes");
+            if(existe = true){
+                System.out.println("Resposta: " + existe + " \nExiste no banco!" );
+            }else{
+                System.out.println("Resposta: " + existe + "\nNão existe no banco!");
+            }
 
             System.out.println("\nDeletando Cliente e exibindo a lista");
-            clientes.delete(3);
-            clientes.delete(2);
+            clientes.deleteById(1);
 
-            clientes.obterTodos().forEach(System.out::println);
+            clientes.findAll().forEach(System.out::println);
+
+            System.out.println("\nDeletando por nome/ Query Methods");
+            clientes.deleteByNomeLike("%Fonte%");
+
+            clientes.findAll().forEach(System.out::println);
 
         };
     }
-
-//    @Bean
-//    public CommandLineRunner ini(@Autowired Produtos produtos){
-//        return args -> {
-//
-//            System.out.println("\n Salvando Produto");
-//            produtos.salvar(new Produto("descricão um", 100.00));
-//
-//            List<Produto> todosProdutos = produtos.obterTodos();
-//            todosProdutos.forEach(System.out::println);
-//        };
-//    }
 
     public static void main(String[] args) {
         SpringApplication.run(VendasApplication.class, args);
