@@ -1,21 +1,36 @@
 package br.com.alexandre.domain.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
 
+@Entity
+@Table(name="produto")
 public class Produto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "descicao", length = 200)
     private String descricao;
-    private Double preco_unitario;
+
+    @Column(name = "preco_unitario")
+    private BigDecimal preco_unitario;
+
+//    @OneToMany(mappedBy = "produto")
+//    private Set<ItemPedido> itens;
 
     public Produto() {
     }
 
-    public Produto(String descricao, Double preco_unitario) {
+    public Produto(String descricao, BigDecimal preco_unitario) {
         this.descricao = descricao;
         this.preco_unitario = preco_unitario;
     }
 
-    public Produto(Integer id, String descricao, Double preco_unitario) {
+    public Produto(Integer id, String descricao, BigDecimal preco_unitario) {
         this.id = id;
         this.descricao = descricao;
         this.preco_unitario = preco_unitario;
@@ -37,11 +52,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Double getPreco_unitario() {
+    public BigDecimal getPreco_unitario() {
         return preco_unitario;
     }
 
-    public void setPreco_unitario(Double preco_unitario) {
+    public void setPreco_unitario(BigDecimal preco_unitario) {
         this.preco_unitario = preco_unitario;
     }
 
